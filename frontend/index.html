@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div id="mainScr">
+    
+        <h1>Sitzungen erstellen oder bearbeiten</h1>
+
+        <div id="maindiv" class="maindiv">
+            <select name="Klasse" id="mainclass" class="maindiv_item"></select>
+            <input type="date", id="maindate" class="maindiv_item">
+        </div>
+
+
+        <div class="mainbutton_div">
+            <button id="mainbutton" class="mainbutton" onclick="pressMainbutton()">Bestätigen</button>
+        </div>
+
+        <div class="popup_background" id="popup_background">
+
+            <div class="popup_window" id="popup_window">
+
+                <p class="popup_content", id="popup_content"></p>
+
+                <div class="popup_buttons", id="popup_buttons">
+                    <button class="createSessionYes popup_button">Ja</button>
+                    <button class="createSessionNo popup_button">Nein</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="editSession">
+        <header>
+            <button class="back editSessionBtn">Abbrechen</button>
+            <h1 id="seesionName">Session name</h1>
+            <button class="saveSessionEdits editSessionBtn">Speichern</button>
+        </header>
+
+        
+        <main>
+            <div class="sessionDesc inputText">
+                <p>Beschreibung: </p>
+                <input type="text" class="inputSessionInfo">
+            </div>
+
+            <div class="sessionCreator inputText">
+                <p>Ersteler: </p>
+                <input type="text" class="inputSessionCreator">
+            </div>
+
+
+
+            <list class="profiles_list">
+            </list>
+            <button class="addProfile">+</button>
+        </main>
+
+    </div>
+
+</body>
+</html>

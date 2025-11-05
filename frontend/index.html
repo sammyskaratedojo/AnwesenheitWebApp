@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css"/>
+    <link rel="manifest" href="manifest.json">
     <script src="script.js" defer></script>
+    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
 </head>
 <body>
 
@@ -20,10 +22,10 @@
 
 
         <div class="mainbutton_div">
-            <button id="mainbutton" class="mainbutton" onclick="pressMainbutton()">Bestätigen</button>
+            <button id="mainbutton" class="mainbutton">Bestätigen</button>
         </div>
 
-        <div class="popup_background" id="popup_background">
+        <!-- <div class="popup_background" id="popup_background">
 
             <div class="popup_window" id="popup_window">
 
@@ -34,13 +36,13 @@
                     <button class="createSessionNo popup_button">Nein</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <div class="editSession">
         <header>
             <button class="back editSessionBtn">Abbrechen</button>
-            <h1 id="seesionName">Session name</h1>
+            <h1 id="sessionName">Session name</h1>
             <button class="saveSessionEdits editSessionBtn">Speichern</button>
         </header>
 
@@ -48,19 +50,23 @@
         <main>
             <div class="sessionDesc inputText">
                 <p>Beschreibung: </p>
-                <input type="text" class="inputSessionInfo">
+                <input type="text" class="inputSessionInfo textInput">
             </div>
 
             <div class="sessionCreator inputText">
                 <p>Ersteler: </p>
-                <input type="text" class="inputSessionCreator">
+                <input type="text" class="inputSessionCreator textInput">
             </div>
 
 
 
             <list class="profiles_list">
             </list>
-            <button class="addProfile">+</button>
+
+            <div class="addProfile">
+                <input type="text" class="textInput">
+                <button>+</button>
+            </div>
         </main>
 
     </div>

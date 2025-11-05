@@ -3,7 +3,7 @@
 // Make all Classes in Mainmenu Selection
 
 
-API_URI = "http://localhost:3000/"
+API_URI = "https://anwesenheits-avzr716yb-daniels-projects-153cc280.vercel.app/api/v1/"
 
 let classes = null
 
@@ -347,3 +347,4 @@ main()
 
 // (sort members)
 // (check session post -> get (url params))
+

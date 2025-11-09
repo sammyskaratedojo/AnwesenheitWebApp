@@ -3,8 +3,7 @@
 // Make all Classes in Mainmenu Selection
 
 
-// API_URI = "https://anwesenheits-api.vercel.app/api/v1/"
-API_URI = "http://localhost:3000"
+API_URI = "https://anwesenheits-api.vercel.app/api/v1/"
 
 let classes = null
 let allProfileNames = []
@@ -373,3 +372,4 @@ main()
 // evtl ändern dass der name in einer Liste in einem p steht
 // (sort members)
 // (check-session post -> get (url params))
+

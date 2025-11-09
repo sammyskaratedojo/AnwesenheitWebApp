@@ -1,4 +1,4 @@
-const API_URI = "https://anwesenheits-api.vercel.app/api/v1/"
+const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 
 const cacheName = "KarateAnwesenheit"
 const cachedURLs = [
@@ -29,4 +29,5 @@ self.addEventListener("fetch", e => {
         return res || fetch(e.request)
     }))
 })
+
 

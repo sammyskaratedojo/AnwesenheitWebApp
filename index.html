@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aufnahme der TVL-Karate-Anwesenheiten">
+    <meta name="theme-color", content="#141414">
+    <title>TVL Karate Anwesenheit</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="manifest" href="manifest.json">
+    <script src="script.js" defer></script>
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+</head>
+<body>
+
+    <div id="mainScr">
+    
+        <h1>Sitzungen erstellen oder bearbeiten</h1>
+
+        <div id="maindiv" class="maindiv">
+            <select name="Klasse" id="mainclass" class="maindiv_item"></select>
+            <input type="date", id="maindate" class="maindiv_item">
+        </div>
+
+        <div class="mainbutton_div">
+            <button id="mainbutton" class="mainbutton">Bestätigen</button>
+        </div>
+    </div>
+    
+
+
+    <div class="editSession">
+        <header>
+            <button class="back editSessionBtn">Abbrechen</button>
+            <h1 id="sessionName">Session name</h1>
+            <button class="saveSessionEdits editSessionBtn">Speichern</button>
+        </header>
+        
+        <main>
+            <div class="sessionDesc inputText">
+                <p>Beschreibung: </p>
+                <input type="text" name="session-desc" class="inputSessionInfo textInput">
+            </div>
+
+            <div class="sessionCreator inputText">
+                <p>Ersteller: </p>
+                <input type="text" name="session-creator" class="inputSessionCreator textInput">
+            </div>
+
+            <list class="profiles_list">
+            </list>
+
+            <div class="addProfile">
+                <div class="inputNewProfile">
+                    <input name="new-profile" type="text" class="textInput">
+                    <p class="suggestion"></p>
+                </div> 
+
+                <button>+</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

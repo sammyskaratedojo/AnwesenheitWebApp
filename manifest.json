@@ -1,0 +1,18 @@
+{
+    "short_name": "Anwesenheit",
+	"name": "TVL Karate Anwesenheit",
+	"lang": "DE",
+	"start_url": ".",
+	"display": "standalone",
+	"background_color": "#141414",
+	"theme_color": "#141414",
+	"orientation": "portrait",
+	"icons": [
+		{
+			"src": "assets/favicon.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	]
+}

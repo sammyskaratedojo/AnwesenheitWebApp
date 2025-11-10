@@ -1,11 +1,7 @@
-
-
-// Make all Classes in Mainmenu Selection
-
-
 API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+// API_URI = "http://localhost:3000"
 
-let classes = null
+let classes = []
 let allProfileNames = []
 
 let openedSession = {
@@ -132,16 +128,12 @@ async function checkSession(date, className)
 
 async function openSession(date, className)
 {
-    document.getElementById("sessionName").textContent = className + "; " + formatDate(date)
-
-    // console.log(`get-session?sessionClass=${encodeURIComponent(className)}&sessionDate=${encodeURIComponent(formatDate(date))}`)
     let res = await fetch(API_URI + `/get-session?sessionClass=${encodeURIComponent(className)}&sessionDate=${encodeURIComponent(formatDate(date))}`) // Check if Session exists
-    if(!res.ok) console.error("Session not found")
-
-    // add Profiles to list
+    if(!res.ok) return console.error("Session not found")
 
     const session = await res.json()
-    // console.log(session)
+
+    document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className + ", " + formatDate(date)
 
     session.members.forEach(profile =>
     {
@@ -151,7 +143,7 @@ async function openSession(date, className)
     document.querySelector("#mainScr").style.display = "none"
     document.querySelector(".editSession").style.display = "initial"
 
-    // desv
+    // desc
     document.querySelector(".inputSessionInfo").value = session.info
     
     openedSession.className = className
@@ -189,7 +181,9 @@ function addProfileRow(name, status)
     const profilesList = document.querySelector(".profiles_list")
 
     const newLi = document.createElement("li")
-    newLi.innerText = name
+    const newP = document.createElement("p")
+    newP.innerText = name
+    newLi.appendChild(newP)
     profilesList.appendChild(newLi)
     
     const selectStatus = document.createElement("select")
@@ -213,13 +207,15 @@ async function addProfileToSession()
     document.querySelector(".addProfile input").value = ""
     
 
-    document.querySelectorAll(".profiles_list li").forEach(li => {
-        if(li.innerText == profileName)
+    document.querySelectorAll(".profiles_list li")
+    
+    for (let name of document.querySelectorAll(".profiles_list li p")) {
+        if(name.innerText == profileName)
         {
             (new Dialogue("Profil ist bereits in der Liste.", ["Ok"])).showDialogue()
             return
         }
-    })
+    }
 
     const res = await fetch(API_URI + "/check-profile?name=" + encodeURIComponent(profileName))
 
@@ -254,20 +250,27 @@ async function createZwProfile(profileName)
 
 async function saveSessionUpdates()
 {
-    const newMembers = []
-
-    document.querySelectorAll(".profiles_list li").forEach(li => {
-        const name = li.innerText
-        const status = li.querySelector("select").selectedOptions[0].textContent
-        newMembers.push({name: name, status: status})
-    })
-
     const creator = document.querySelector(".inputSessionCreator").value
     if(creator === "")
     {
-        window.alert("Bitte gib einen Ersteller für die Sitzung an.")
+        (new Dialogue("Bitte gib einen Ersteller an.", ["Ok"])).showDialogue()
         return
     }
+    
+    const spinnerImg = document.createElement("img")
+    spinnerImg.src = "./assets/spinner.png"
+    spinnerImg.classList.add("spin")
+    document.querySelector("button.saveSessionEdits").innerHTML = ""
+    document.querySelector("button.saveSessionEdits").appendChild(spinnerImg)
+
+
+    const newMembers = []
+
+    document.querySelectorAll(".profiles_list li").forEach(li => {
+        const name = li.querySelector("p").innerText
+        const status = li.querySelector("select").selectedOptions[0].textContent
+        newMembers.push({name: name, status: status})
+    })
 
 
     await fetch(API_URI + "/edit-session", {
@@ -283,6 +286,9 @@ async function saveSessionUpdates()
             creator: creator,
         })
     })
+
+    document.querySelector("button.saveSessionEdits").removeChild(spinnerImg)
+    document.querySelector("button.saveSessionEdits").innerHTML = "Speichern"
 }
 
 
@@ -297,7 +303,6 @@ function genProfileSuggestion()
         if(!p.toLowerCase().includes(currProfileInput.toLowerCase())) continue
         
         document.querySelector(".suggestion").innerText = p
-        console.log(p)
         return
     }
 
@@ -305,13 +310,23 @@ function genProfileSuggestion()
 }
 
 
-function resetWindow()
+async function resetWindow()
 {
+    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Auf seite bleiben", "Bestätigen"])
+    const res = await resetDial.showDialogue()
+    if(res == "Auf seite bleiben") return
     openedSession = {}
     document.querySelector(".inputNewProfile input").value = ""
     document.querySelectorAll("input").forEach(i => {i.value = ""})
     window.location.reload()
 }
+
+
+function abbrevWeekday(fullDay)
+{
+    return fullDay.slice(0, 2) + "."
+}
+
 
 
 class Dialogue
@@ -361,16 +376,13 @@ class Dialogue
 
 
 
-
 main()
+
+
 
 
 //   TODO   \\
 
-// BUG: Profil nicht gefunden
-
 // evtl ändern dass der name in einer Liste in einem p steht
 // (sort members)
 // (check-session post -> get (url params))
-
-

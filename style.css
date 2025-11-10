@@ -8,13 +8,12 @@
 
 body {
     /* background-color: rgb(217, 231, 239); */
-    background-color: #141414;
+    background-color: #171717;
     color: white;
-    font-size: 14px;
 }
 
 h1 {
-    margin: 64px 0 128px 0;
+    margin: 64px 0 100px 0;
     font-size: large;
     text-align: center;
 }
@@ -43,10 +42,16 @@ h1 {
 
 
 button {
-    padding: 5px 30px;
+    padding: 5px 20px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
+    width: 80px;
+    min-width: max-content;
+    height: 35px;
+    min-height: max-content;
+    
+    font-size: inherit;
 }
 
 input {
@@ -72,9 +77,9 @@ select { cursor: pointer }
 .dialogue {
     padding: 20px;
     display: flex;
-    gap: 20px;
+    gap: 50px;
     position: fixed;
-    top: 45dvh;
+    top: 40dvh;
     left: 50dvw;
     transform: translateY(-50%) translateX(-50%);
     background-color: #1f1f1f;
@@ -82,6 +87,7 @@ select { cursor: pointer }
     flex-direction: column;
     border-radius: 8px;
     align-items: center;
+    width: max-content;
 }
 
 .dialogue div
@@ -89,24 +95,10 @@ select { cursor: pointer }
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    width: 100%;
+    gap: 40px;
 }
 
-.popup_content {
-    padding-top: 10px;
-}
-
-.popup_buttons {
-    flex-direction: row;
-    align-items: center;
-}
-
-.popup_button {
-    background-color: aliceblue;
-    box-shadow: 0px 0px 2px rgb(214, 227, 238);
-    border-radius: 5px;
-    border: none;
-}
 
 .mainbutton_div {
     width: 100%;
@@ -126,18 +118,20 @@ select { cursor: pointer }
 
 header {
     width: 100dvw;
-    height: 60px;
+    padding-block: 10px;
     background-color: #00bbff20;
     box-shadow: 0px 0px 16px 0 #000000bb;
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
     backdrop-filter: blur(4px);
-    padding-inline: 16px;
+    padding-inline: 20px;
 }
+
 
 header h1
 {
@@ -147,8 +141,7 @@ header h1
 
 main {
     margin-top: 100px;
-    padding-inline: 16px;
-    /* background-color: #191919; */
+    padding-inline: 20px;
     border-radius: 10px;
     max-width: 70ch;
     margin-inline: auto;
@@ -180,30 +173,23 @@ li:first-child {
     width: 100%;
 }
 
-.profiles_list p {
-    font-weight: bold;
-}
 
 
 .profiles_list select {
-    width: 130px;
-    border: 0;
-    margin: 5px;
+    width: 128px;
+    border: none;
+    margin: 8px;
     border-radius: 5px;
-    border: 6px solid rgb(217, 231, 239);
     background-color: #1f1f1f;
     color: inherit;
-    border: 0;
-    padding: 5px;
+    padding: 8px;
+    font-size: inherit;
 
 }
 
 
 .editSessionBtn {
-    border: 6px solid rgb(217, 231, 239);
-    background-color: rgb(217, 231, 239);
-    border-radius: 5px;
-    padding: 5px 15px;
+    
 }
 
 #mainScr
@@ -231,7 +217,7 @@ li:first-child {
 
 .textInput
 {
-    background-color: #181818;
+    background-color: #1f1f1f;
     border: none;
     border-bottom: 2px solid #0bf;
     color: inherit;
@@ -254,9 +240,11 @@ div.addProfile
 {
     background-color: #1f1f1f;
     background-color: #0bf;
-    aspect-ratio: 1/1;
     padding: 0;
+    min-width: 0;
+    height: unset;
     width: 42px;
+    aspect-ratio: 1/1;
     border: none;
     border-radius: 10px;
     color: inherit;
@@ -276,4 +264,21 @@ div.inputNewProfile
     border-radius: 0 0 5px 5px;
     padding: 5px;
     color: grey;
+}
+
+
+.spin {
+    width: 20px;
+
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

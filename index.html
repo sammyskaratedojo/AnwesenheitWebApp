@@ -10,43 +10,48 @@
     <link rel="manifest" href="manifest.json">
     <script src="script.js" defer></script>
     <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="mainScr">
     
-        <h1>Sitzung erstellen oder bearbeiten</h1>
+        <h1>TVL Karate</h1>
+        <h2>Anwesenheit</h2>
 
         <div id="maindiv" class="maindiv">
             <select name="Klasse" id="mainclass" class="maindiv_item"></select>
             <input type="date", id="maindate" class="maindiv_item">
         </div>
 
-        <div class="mainbutton_div">
-            <button id="mainbutton" class="mainbutton">Bestätigen</button>
-        </div>
+        <button id="mainbutton" class="mainbutton">Bestätigen</button>
     </div>
     
 
 
     <div class="editSession">
         <header>
-            <button class="back editSessionBtn">Zurück</button>
-            <h1 id="sessionName">Session name</h1>
-            <button class="saveSessionEdits editSessionBtn">Speichern</button>
+            <button class="back editSessionBtn"><img src="/assets/back.svg" alt="zurück"></button>
+            
+            <button class="saveSessionEdits editSessionBtn"><img src="/assets/save.svg" alt="speichern"></button>
         </header>
         
         <main>
-            <div class="sessionDesc inputText">
-                <p>Beschreibung: </p>
-                <input type="text" name="session-desc" class="inputSessionInfo textInput">
-            </div>
+            <h1 id="sessionName">Session name</h1>
+            <h2></h2>
+            <div class="sessonData">    
+                <div class="sessionDesc inputDiv">
+                    <label for="session-desc">Beschreibung: </label>
+                    <input type="text" name="session-desc" class="inputSessionInfo textInput">
+                </div>
 
-            <div class="sessionCreator inputText">
-                <p>Ersteller: </p>
-                <input type="text" name="session-creator" class="inputSessionCreator textInput">
+                <div class="sessionCreator inputDiv">
+                    <label for="session-creator">Ersteller: </label>
+                    <input type="text" name="session-creator" class="inputSessionCreator textInput">
+                </div>
             </div>
-
             <list class="profiles_list">
             </list>
 
@@ -56,7 +61,7 @@
                     <p class="suggestion"></p>
                 </div> 
 
-                <button>+</button>
+                <button><img src="assets/add.svg" alt="Profil hinzufügen"></button>
             </div>
         </main>
     </div>

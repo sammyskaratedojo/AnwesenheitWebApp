@@ -69,6 +69,15 @@ async function pressMainbutton()
         return
     }
 
+    const mainButton = document.querySelector("#mainbutton")
+    const spinner = document.createElement("img")
+    spinner.src = "./assets/spinner.png"
+    spinner.classList.add("spin")
+    mainButton.innerHTML = ""
+    mainButton.appendChild(spinner)
+    // disable
+
+
     const date = new Date(document.querySelector("#maindate").value)
     const className = document.querySelector("#mainclass").value
     
@@ -103,6 +112,10 @@ async function pressMainbutton()
             (new Dialogue("Ein Netzwerkfehler ist aufgetreten.", ["Ok"])).showDialogue()
             break
     }
+
+    mainButton.removeChild(spinner)
+    mainButton.innerText = "Bestätigen"
+    // re-enable
 }
 
 
@@ -133,7 +146,8 @@ async function openSession(date, className)
 
     const session = await res.json()
 
-    document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className + ", " + formatDate(date)
+    document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className 
+    document.querySelector(".editSession h2").innerText = formatDate(date)
 
     session.members.forEach(profile =>
     {
@@ -288,7 +302,9 @@ async function saveSessionUpdates()
     })
 
     document.querySelector("button.saveSessionEdits").removeChild(spinnerImg)
-    document.querySelector("button.saveSessionEdits").innerHTML = "Speichern"
+    const saveImg = document.createElement("img")
+    saveImg.src = "./assets/save.svg"
+    document.querySelector("button.saveSessionEdits").appendChild(saveImg)
 }
 
 

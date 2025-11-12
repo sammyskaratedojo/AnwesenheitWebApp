@@ -9,10 +9,10 @@
 
 :root
 {
-    --color-bg: #171717;
+    --color-bg: #161616;
     --color-bg-l: #272727;
     --color-bg-d: #202020;
-    --color-accent : #00bbff
+    --color-accent : #00bbff;
 }
 
 body {
@@ -43,7 +43,7 @@ h2
     color: #ababab;
     margin-bottom: 64px;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 24px;
 }
 
 .maindiv {
@@ -212,7 +212,7 @@ main {
     background-color: transparent;
     /* border: 2px solid var(--color-bg-l); */
     border: none;
-    border-bottom: 2px solid #0bf;
+    border-bottom: 2px solid var(--color-accent);
     color: inherit;
     cursor: initial;
     outline: none;

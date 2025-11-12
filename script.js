@@ -142,13 +142,22 @@ async function checkSession(date, className)
 async function openSession(date, className)
 {
     let res = await fetch(API_URI + `/get-session?sessionClass=${encodeURIComponent(className)}&sessionDate=${encodeURIComponent(formatDate(date))}`) // Check if Session exists
-    if(!res.ok) return console.error("Session not found")
+    if(!res.ok)
+    {
+        const errDial = new Dialogue("Fehler: Sitzung nicht gefunden", ["Ok"])
+        await errDial.showDialogue()
+        return;
+    }
 
     const session = await res.json()
 
     document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className 
     document.querySelector(".editSession h2").innerText = formatDate(date)
-
+    
+    console.log(session.members)
+    console.log(sortMembers(session.members))
+    session.members = sortMembers(session.members)
+    
     session.members.forEach(profile =>
     {
         addProfileRow(profile.name, profile.status)
@@ -333,8 +342,31 @@ async function resetWindow()
     if(res == "Auf seite bleiben") return
     openedSession = {}
     document.querySelector(".inputNewProfile input").value = ""
+    document.querySelector(".inputSessionInfo").value = ""
+    document.querySelector(".inputSessionCreator").value = ""
+
     document.querySelectorAll("input").forEach(i => {i.value = ""})
     window.location.reload()
+}
+
+
+function sortMembers(members) {
+    return members.sort((a, b) => {
+        const partsA = a.name.split(" ");
+        const partsB = b.name.split(" ");
+
+        const lastA = partsA.at(-1).toLowerCase();
+        const lastB = partsB.at(-1).toLowerCase();
+
+        // 1. Vergleich: Nachname
+        const lastCompare = lastA.localeCompare(lastB);
+        if (lastCompare !== 0) return lastCompare;
+
+        // 2. Vergleich: Vorname (erster Teil)
+        const firstA = partsA[0].toLowerCase();
+        const firstB = partsB[0].toLowerCase();
+        return firstA.localeCompare(firstB);
+    });
 }
 
 
@@ -397,8 +429,9 @@ main()
 
 
 
+
 //   TODO   \\
 
-// evtl ändern dass der name in einer Liste in einem p steht
-// (sort members)
+
 // (check-session post -> get (url params))
+// Limit last session tec

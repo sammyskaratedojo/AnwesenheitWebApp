@@ -15,6 +15,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="errDiv">
+        <p>Keine Verbindung zum Server.</p>
+        <button><img src="./assets/refresh.svg" alt="Aktualisieren"></button>
+    </div>
+
 
     <div id="mainScr">
     
@@ -28,7 +33,7 @@
 
         <button id="mainbutton" class="mainbutton">Bestätigen</button>
     </div>
-    
+
 
 
     <div class="editSession">
@@ -57,12 +62,13 @@
 
             <div class="addProfile">
                 <div class="inputNewProfile">
-                    <input name="new-profile" type="text" class="textInput">
+                    <input name="new-profile" type="text" class="textInput" placeholder="Neues Profil...">
                     <p class="suggestion"></p>
                 </div> 
 
                 <button><img src="assets/add.svg" alt="Profil hinzufügen"></button>
             </div>
+
         </main>
     </div>
 </body>

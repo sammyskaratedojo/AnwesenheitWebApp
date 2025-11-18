@@ -1,5 +1,8 @@
-API_URI = "https://anwesenheits-api.vercel.app/api/v1"
-// API_URI = "http://localhost:3000"
+// const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+// const API_URI = "http://localhost:3000"
+const API_URI = "http://ddesktop:3000"
+
+const STATUSES = ["Trainer", "Assistent", "Anwesend", "Entschuldigt", "Unbekannt"]
 
 let classes = []
 let allProfileNames = []
@@ -16,9 +19,15 @@ async function main()
         navigator.serviceWorker.register("./serviceWorker.js")
     }
 
-    await fetchApiData()
 
-
+    try {
+        await fetchApiData()
+    }
+    catch(e) {
+        document.querySelector(".errDiv").style.display = "flex"
+    }
+    
+    
     document.querySelector(".mainbutton").addEventListener("click", pressMainbutton)
 
     document.querySelector("button.back").addEventListener("click", resetWindow)
@@ -33,13 +42,15 @@ async function main()
     {
         document.querySelector(".inputNewProfile input").value = document.querySelector(".suggestion").innerText
     })
+
+    document.querySelector(".errDiv button").addEventListener("click", () => window.location.reload())
 }
 
 
 async function fetchApiData()
 {
-    let res = await fetch(API_URI + "/classes")  
-    classes = await res.json()
+    let classesReq = await fetch(API_URI + "/classes")
+    classes = await classesReq.json()
 
     // Search for Mainclass-Object
     const selectClass = document.getElementById("mainclass");
@@ -47,14 +58,15 @@ async function fetchApiData()
     // Append each Item from "Classes" to mainclass-object
     classes.forEach(cls => {
         const option = document.createElement("option");
-        option.value, option.textContent = cls, cls;
+        option.value = cls.name
+        option.textContent = abbrevWeekday(cls.weekday) + " " + cls.name
         selectClass.appendChild(option);
     })
 
-    res = await fetch(API_URI + "/profiles")
+    const profilesReq = await fetch(API_URI + "/profiles")
     
-    const allProfilesJSON = await res.json()
-    allProfilesJSON.forEach(p =>
+    const allProfiles = await profilesReq.json()
+    allProfiles.forEach(p =>
     {
         allProfileNames.push(p.name)
     })
@@ -109,10 +121,11 @@ async function pressMainbutton()
             break
 
         default:
-            (new Dialogue("Ein Netzwerkfehler ist aufgetreten.", ["Ok"])).showDialogue()
+            (new Dialogue("Ein Fehler beim Öffnen der Sitzung ist aufgetreten.", ["Ok"])).showDialogue()
             break
     }
 
+    // reset button
     mainButton.removeChild(spinner)
     mainButton.innerText = "Bestätigen"
     // re-enable
@@ -121,18 +134,10 @@ async function pressMainbutton()
 
 async function checkSession(date, className)
 {
-    const res = await fetch(API_URI + "/check-session", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(
-        {
-            date: formatDate(date),
-            className: className
-            
-        })
-    })
+    const res = await fetch(API_URI + "/check-session?"
+        + `date=${encodeURIComponent(formatDate(date))}&`
+        + `className=${className}`)
+    
 
     const json = await res.json()
     return json.errorCode
@@ -141,7 +146,10 @@ async function checkSession(date, className)
 
 async function openSession(date, className)
 {
-    let res = await fetch(API_URI + `/get-session?sessionClass=${encodeURIComponent(className)}&sessionDate=${encodeURIComponent(formatDate(date))}`) // Check if Session exists
+    let res = await fetch(API_URI + "/get-session?"
+        + `sessionClass=${encodeURIComponent(className)}&`
+        + `sessionDate=${encodeURIComponent(formatDate(date))}`)
+    
     if(!res.ok)
     {
         const errDial = new Dialogue("Fehler: Sitzung nicht gefunden", ["Ok"])
@@ -154,8 +162,6 @@ async function openSession(date, className)
     document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className 
     document.querySelector(".editSession h2").innerText = formatDate(date)
     
-    console.log(session.members)
-    console.log(sortMembers(session.members))
     session.members = sortMembers(session.members)
     
     session.members.forEach(profile =>
@@ -166,7 +172,6 @@ async function openSession(date, className)
     document.querySelector("#mainScr").style.display = "none"
     document.querySelector(".editSession").style.display = "initial"
 
-    // desc
     document.querySelector(".inputSessionInfo").value = session.info
     
     openedSession.className = className
@@ -200,7 +205,6 @@ function formatDate(date)
 
 function addProfileRow(name, status)
 {
-    const STATI = ["Trainer", "Assistent", "Anwesend", "Entschuldigt", "Unbekannt"]
     const profilesList = document.querySelector(".profiles_list")
 
     const newLi = document.createElement("li")
@@ -208,19 +212,25 @@ function addProfileRow(name, status)
     newP.innerText = name
     newLi.appendChild(newP)
     profilesList.appendChild(newLi)
-    
+
     const selectStatus = document.createElement("select")
 
-    STATI.forEach((s, index) => {
+    STATUSES.forEach((s) => {
         const option = document.createElement("option")
-        option.value = index
+        option.value = s
         option.textContent = s
         selectStatus.appendChild(option)
         option.selected = (s === status)
     })
 
-    selectStatus.se = status
     newLi.appendChild(selectStatus)
+
+
+    selectStatus.style.color = getStatusColor(status)
+
+    selectStatus.addEventListener("change", e => {
+        selectStatus.style.color = getStatusColor(e.target.selectedOptions[0].value)
+    })
 }
 
 
@@ -240,11 +250,18 @@ async function addProfileToSession()
         }
     }
 
-    const res = await fetch(API_URI + "/check-profile?name=" + encodeURIComponent(profileName))
+    const res = await fetch(API_URI + "/check-profile?"
+        + `name=${encodeURIComponent(profileName)}`)
 
-    if(res.status == 404)
+    if(res.status === 500)
     {
-        const dialogue = new Dialogue(`Profil '${profileName}' nicht gefunden.\nDieses Profil neu erstellen?`, ["Ja", "Nein"])
+        const dialogue = new Dialogue(`Fehler beim Suchen des Profils`, ["Ok"])
+        await dialogue.showDialogue()
+    }
+    
+    if(res.status === 404)
+    {
+        const dialogue = new Dialogue(`Profil '${profileName}' existiert noch nicht.\nDieses Profil neu erstellen?`, ["Ja", "Nein"])
         const res = await dialogue.showDialogue()
 
         if(res == "Nein") return
@@ -291,9 +308,10 @@ async function saveSessionUpdates()
 
     document.querySelectorAll(".profiles_list li").forEach(li => {
         const name = li.querySelector("p").innerText
-        const status = li.querySelector("select").selectedOptions[0].textContent
+        const status = li.querySelector("select").selectedOptions[0].value
         newMembers.push({name: name, status: status})
     })
+
 
 
     await fetch(API_URI + "/edit-session", {
@@ -347,6 +365,33 @@ async function resetWindow()
 
     document.querySelectorAll("input").forEach(i => {i.value = ""})
     window.location.reload()
+}
+
+
+function getStatusColor(status)
+{
+    let hue = ""
+
+    switch(status)
+    {
+        case STATUSES[0]: // Trainer
+            hue = "235deg"
+            break;
+        case STATUSES[1]: // Assistent
+            hue = "200deg"
+            break;
+        case STATUSES[2]: // Anwesend
+            hue = "136deg"
+            break;
+        case STATUSES[3]: // Entschuldigt
+            hue = "15deg"
+            break;
+        case STATUSES[4]: // Unbekannt
+            return "#bbb"
+        
+    }
+
+    return `hsl(${hue}, 100%, 80%)`
 }
 
 
@@ -433,5 +478,4 @@ main()
 //   TODO   \\
 
 
-// (check-session post -> get (url params))
 // Limit last session tec

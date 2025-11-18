@@ -5,7 +5,6 @@ const cachedURLs = [
     "/",
     "/AnwesenheitWebApp/index.html",
     "/AnwesenheitWebApp/style.css",
-    "/AnwesenheitWebApp/script.js",
     "/AnwesenheitWebApp/manifest.json",
     "/AnwesenheitWebApp/assets/favicon.png",
     "/AnwesenheitWebApp/assets/spinner.png",

@@ -1,4 +1,6 @@
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+// const API_URI = "http://localhost:3000"
+// const API_URI = "http://ddesktop:3000"
 
 const STATUSES = ["Trainer", "Assistent", "Anwesend", "Entschuldigt", "Unbekannt"]
 
@@ -34,7 +36,7 @@ async function main()
 
     document.querySelector(".addProfile button").addEventListener("click", addProfileToSession)
 
-    document.querySelector(".inputNewProfile input").addEventListener("input", genProfileSuggestion)
+    document.querySelector("input.inputNewProfile").addEventListener("input", genProfileSuggestion)
     
     document.querySelector(".suggestion").addEventListener("click", () =>
     {
@@ -49,6 +51,16 @@ async function fetchApiData()
 {
     let classesReq = await fetch(API_URI + "/classes")
     classes = await classesReq.json()
+
+    const weekdayOrder = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
+    classes.sort((a, b) =>
+    {
+        const weekdayCompare = weekdayOrder.indexOf(a.weekday) - weekdayOrder.indexOf(b.weekday)
+
+        if (weekdayCompare !== 0) return weekdayCompare
+        // Sekundär nach Klassennamen sortieren
+        return a.name.localeCompare(b.name)
+    })
 
     // Search for Mainclass-Object
     const selectClass = document.getElementById("mainclass");
@@ -86,6 +98,7 @@ async function pressMainbutton()
     mainButton.innerHTML = ""
     mainButton.appendChild(spinner)
     // disable
+    mainButton.disabled = true
 
 
     const date = new Date(document.querySelector("#maindate").value)
@@ -126,7 +139,7 @@ async function pressMainbutton()
     // reset button
     mainButton.removeChild(spinner)
     mainButton.innerText = "Bestätigen"
-    // re-enable
+    mainButton.disabled = false
 }
 
 
@@ -333,17 +346,22 @@ async function saveSessionUpdates()
 }
 
 
-function genProfileSuggestion()
+function genProfileSuggestion(e)
 {
-    const currProfileInput = document.querySelector(".inputNewProfile input").value
-    if(currProfileInput === "") return document.querySelector(".suggestion").innerText = ""
+    const currProfileInput = document.querySelector("input.inputNewProfile").value
+    if(currProfileInput === "") return // document.querySelector(".suggestion").innerText = ""
 
+    if(e.inputType === "deleteContentBackward" || e.inputType === "deleteContentBackward") return
+    
     for(let i = 0; i < allProfileNames.length; i++)
     {
         const p = allProfileNames[i]
-        if(!p.toLowerCase().includes(currProfileInput.toLowerCase())) continue
+        if(!p.toLowerCase().startsWith(currProfileInput.toLowerCase())) continue
         
-        document.querySelector(".suggestion").innerText = p
+        // document.querySelector(".suggestion").innerText = p
+        document.querySelector("input.inputNewProfile").value = p
+        document.querySelector("input.inputNewProfile").setSelectionRange(currProfileInput.length, p.length)
+
         return
     }
 
@@ -353,11 +371,11 @@ function genProfileSuggestion()
 
 async function resetWindow()
 {
-    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Auf seite bleiben", "Bestätigen"])
+    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Auf Seite bleiben", "Bestätigen"])
     const res = await resetDial.showDialogue()
-    if(res == "Auf seite bleiben") return
+    if(res == "Auf Seite bleiben") return
     openedSession = {}
-    document.querySelector(".inputNewProfile input").value = ""
+    document.querySelector("input.inputNewProfile").value = ""
     document.querySelector(".inputSessionInfo").value = ""
     document.querySelector(".inputSessionCreator").value = ""
 
@@ -477,4 +495,3 @@ main()
 
 
 // Limit last session tec
-

@@ -3,11 +3,11 @@ const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 const cacheName = "KarateAnwesenheit"
 const cachedURLs = [
     "/",
-    "/AnwesenheitWebApp/index.html",
-    "/AnwesenheitWebApp/style.css",
-    "/AnwesenheitWebApp/manifest.json",
-    "/AnwesenheitWebApp/assets/favicon.png",
-    "/AnwesenheitWebApp/assets/spinner.png",
+    "./index.html",
+    "./style.css",
+    "./manifest.json",
+    "./assets/favicon.png",
+    "./assets/spinner.png",
     API_URI + "/classes"
 ]
 

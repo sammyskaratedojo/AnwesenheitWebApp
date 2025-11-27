@@ -14,13 +14,14 @@
     --color-bg-d: #202020;
     --color-accent : #00bbff;
     --color-fg: rgb(240, 240, 240);
+    
 }
 
-html
-{
-    
-    height: 10vh;
+::selection {
+    background-color: var(--color-accent);
 }
+
+
 
 body {
     /* background-color: rgb(217, 231, 239); */
@@ -327,7 +328,7 @@ div.addProfile
 
 }
 
-.inputNewProfile input
+.inputNewProfile
 {
     border: none;
     padding: 8px;
@@ -347,7 +348,9 @@ div.inputNewProfile
     border-radius: 0 0 5px 5px;
     padding: 5px;
     color: grey;
-
+    position: absolute;
+    left: 30px;
+    background-color: red;
     display: none;
 }
 

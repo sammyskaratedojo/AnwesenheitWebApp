@@ -2,6 +2,7 @@ const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 // const API_URI = "http://localhost:3000"
 // const API_URI = "http://ddesktop:3000"
 
+
 const STATUSES = ["Trainer", "Assistent", "Anwesend", "Entschuldigt", "Unbekannt"]
 
 let classes = []
@@ -242,6 +243,8 @@ function addProfileRow(name, status)
     selectStatus.addEventListener("change", e => {
         selectStatus.style.color = getStatusColor(e.target.selectedOptions[0].value)
     })
+
+    profilesList.scrollTo(0, profilesList.scrollHeight)
 }
 
 
@@ -494,4 +497,10 @@ main()
 //   TODO   \\
 
 
-// Limit last session tec
+// save state of app / form submission
+
+// routes for different sessions
+//   e.g. .../sessions/ID
+// statuse sortieren
+// pia wird nicht durchgereicht
+// sammy seine comments schön machen

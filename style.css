@@ -266,6 +266,7 @@ li:first-child {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    padding-bottom: 64px;
 }
 
 

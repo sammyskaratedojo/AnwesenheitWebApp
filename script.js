@@ -491,12 +491,6 @@ class Dialogue
 main()
 
 
-window.addEventListener('beforeunload', (e) => {
-    e.preventDefault();
-    e.returnValue = '';
-});
-
-
 
 
 //   TODO   \\
@@ -510,3 +504,4 @@ window.addEventListener('beforeunload', (e) => {
 // pia wird nicht durchgereicht
 
 // sammy seine comments schön machen
+

@@ -491,6 +491,11 @@ class Dialogue
 main()
 
 
+window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    e.returnValue = '';
+});
+
 
 
 
@@ -503,4 +508,5 @@ main()
 //   e.g. .../sessions/ID
 // statuse sortieren
 // pia wird nicht durchgereicht
+
 // sammy seine comments schön machen

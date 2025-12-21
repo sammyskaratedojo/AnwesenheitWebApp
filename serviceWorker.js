@@ -1,3 +1,7 @@
+// v2 \\
+
+
+
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 
 const cacheName = "KarateAnwesenheit"

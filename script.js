@@ -3,7 +3,7 @@ const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 // const API_URI = "http://ddesktop:3000"
 
 
-const STATUSES = ["Trainer", "Assistent", "Anwesend", "Entschuldigt", "Unbekannt"]
+const STATUSES = ["Anwesend", "Trainer", "Assistent", "Entschuldigt", "Unbekannt"]
 
 let classes = []
 let allProfileNames = []
@@ -28,7 +28,15 @@ async function main()
         document.querySelector(".errDiv").style.display = "flex"
     }
     
-    
+    window.addEventListener("beforeunload", e =>
+    {
+        if(openedSession.className !== undefined) // if session opened, prevent unloading
+        {
+            e.preventDefault()
+        }
+    })
+
+
     document.querySelector(".mainbutton").addEventListener("click", pressMainbutton)
 
     document.querySelector("button.back").addEventListener("click", resetWindow)
@@ -70,7 +78,7 @@ async function fetchApiData()
     classes.forEach(cls => {
         const option = document.createElement("option");
         option.value = cls.name
-        option.textContent = abbrevWeekday(cls.weekday) + " " + cls.name
+        option.textContent = cls.name
         selectClass.appendChild(option);
     })
 
@@ -344,7 +352,10 @@ async function saveSessionUpdates()
 
     document.querySelector("button.saveSessionEdits").removeChild(spinnerImg)
     const saveImg = document.createElement("img")
-    saveImg.src = "./assets/save.svg"
+    saveImg.src = "./assets/tick.svg"
+    setTimeout(() => {
+        saveImg.src = "./assets/save.svg"
+    }, 1000)
     document.querySelector("button.saveSessionEdits").appendChild(saveImg)
 }
 
@@ -374,7 +385,7 @@ function genProfileSuggestion(e)
 
 async function resetWindow()
 {
-    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Auf Seite bleiben", "Bestätigen"])
+    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Bestätigen", "Auf Seite bleiben"])
     const res = await resetDial.showDialogue()
     if(res == "Auf Seite bleiben") return
     openedSession = {}
@@ -393,13 +404,13 @@ function getStatusColor(status)
 
     switch(status)
     {
-        case STATUSES[0]: // Trainer
+        case STATUSES[1]: // Trainer
             hue = "235deg"
             break;
-        case STATUSES[1]: // Assistent
+        case STATUSES[2]: // Assistent
             hue = "200deg"
             break;
-        case STATUSES[2]: // Anwesend
+        case STATUSES[0]: // Anwesend
             hue = "136deg"
             break;
         case STATUSES[3]: // Entschuldigt
@@ -471,7 +482,7 @@ class Dialogue
             this.dialogue.querySelector("div").appendChild(btn)
             })
         })
-        
+
         document.querySelector("body").appendChild(this.background)
         document.querySelector("body").appendChild(this.dialogue)
 
@@ -487,27 +498,13 @@ class Dialogue
 }
 
 
-window.addEventListener('beforeunload', (e) => {
-    e.preventDefault();
-    e.returnValue = '';
-});
-
 
 main()
 
 
 
 
+
 //   TODO   \\
 
-
-// save state of app / form submission
-
-// routes for different sessions
-//   e.g. .../sessions/ID
-// statuse sortieren
-// pia wird nicht durchgereicht
-
-// sammy seine comments schön machen
-
-
+// haken nach speichern

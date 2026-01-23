@@ -1,4 +1,4 @@
-// v4 \\
+// v5 \\
 
 
 
@@ -26,8 +26,8 @@ self.addEventListener("install", e => {
 self.addEventListener("activate", e => {
     e.waitUntil(caches.open(cacheName).then(cache => {
         cachedURLs.forEach(i => {
-            try { cache.add(i) }
-            catch(e) { console.error("error", e) }
+            cache.add(i)
+            .catch(e => { console.error("error", e) })
         })
     }))
 })

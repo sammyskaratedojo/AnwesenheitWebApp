@@ -1,4 +1,4 @@
-// v3 \\
+// v4 \\
 
 
 
@@ -25,14 +25,17 @@ self.addEventListener("install", e => {
 
 self.addEventListener("activate", e => {
     e.waitUntil(caches.open(cacheName).then(cache => {
-        return cache.addAll(cachedURLs)
+        cachedURLs.forEach(i => {
+            try { cache.add(i) }
+            catch(e) { console.log(e) }
+        })
     }))
 })
 
 
 self.addEventListener("fetch", e => {
     e.respondWith(caches.match(e.request).then(res => {
-        console.log("req", e.request.url, "\n returning", res ? "from cach" : "fetch")
+        console.log("req", e.request.url, "\n returning", res ? "from cache" : "fetch")
         return res || fetch(e.request)
     }))
 })

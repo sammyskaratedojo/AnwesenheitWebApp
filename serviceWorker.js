@@ -12,7 +12,13 @@ const cachedURLs = [
     WEB_APP_URI + "/style.css",
     WEB_APP_URI + "/manifest.json",
     WEB_APP_URI + "/assets/favicon.png",
+    WEB_APP_URI + "/assets/add.svg",
+    WEB_APP_URI + "/assets/back.svg",
+    WEB_APP_URI + "/assets/event.svg",
     WEB_APP_URI + "/assets/spinner.png",
+    WEB_APP_URI + "/assets/save.svg",
+    WEB_APP_URI + "/assets/tick.svg",
+    WEB_APP_URI + "/assets/refresh.svg",
     API_URI + "/classes",
     "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 ]

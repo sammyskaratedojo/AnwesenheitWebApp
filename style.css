@@ -4,18 +4,19 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'roboto';
+    font-family: 'Inter', 'sans-serif';
 }
 
 :root
 {
-    --color-bg: #161616;
-    --color-bg-l: #272727;
-    --color-bg-d: #202020;
-    --color-accent : #00bbff;
-    --color-fg: rgb(240, 240, 240);
-    
+    --color-bg: #111212;
+    --color-bg-l: #1c1e1f;
+    --color-bg-d: #1c1e1f;
+    --color-accent : #4CC0FF;
+    --color-accent-dark: #101D25;
+    --color-fg: rgb(245, 245, 245);
 }
+
 
 ::selection {
     background-color: var(--color-accent);
@@ -31,11 +32,13 @@ body {
 }
 
 #mainScr h1 {
-    margin-top: 64px;
+    margin-top: 90px;
+    color: var(--color-accent);
+    margin-bottom: 32px;
 }
 
 #mainScr h2 {
-    margin-bottom: 100px;
+    margin-bottom: 64px;
 }
 
 h1
@@ -47,7 +50,7 @@ h1
 
 h2
 {
-    color: #ababab;
+    color: var(--color-fg);
     margin-bottom: 64px;
     font-weight: normal;
     font-size: 24px;
@@ -77,14 +80,13 @@ h2
 
 
 button {
-    padding: 10px 20px;
+    padding: 20px 20px;
     cursor: pointer;
     border: none;
     border-radius: 10px;
     width: 80px;
     min-width: max-content;
     height: 35px;
-    min-height: max-content;
     color: inherit;
 
     font-size: inherit;
@@ -93,7 +95,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #383838;
+    border: 1px solid #ffffff09;
 }
 
 button img
@@ -164,9 +166,9 @@ select option {
 
 .mainbutton {
     margin-top: 32px;
-    padding: 0;
     height: calc(13px + 22px);
     width: calc(76px + 66px);
+    background-color: var(--color-accent-dark);
 }
 
 
@@ -243,15 +245,15 @@ li {
     justify-content: space-between;
     width: 100%;
     display: flex;
-    border-radius: 8px; 
-    background-color: var(--color-bg-d);
-    padding-inline: 20px;
-    padding-block: 14px;
+    border-radius: 16px; 
+    background-color: var(--color-bg);
+    padding-inline: 10px;
+    padding-block: 12px;
+
+    border-bottom: 1px solid #1f2528;
+    border-radius: 0;
 }
 
-li:first-child {
-    border-top: none;
-}
 
 
 .profiles_list {
@@ -260,15 +262,15 @@ li:first-child {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding-bottom: 64px;
+    gap: 5px;
+    padding-bottom: 100px;
 }
 
 
 
 select {
     border-radius: 5px;
-    background-color: var(--color-bg-d);
+    background-color: var(--color-bg);
     color: inherit;
     font-size: inherit;
     border: 1px solid #2d2d2d;
@@ -398,5 +400,10 @@ label
 {
     font-size: inherit;
 }
+
+
+
+
+
 
 

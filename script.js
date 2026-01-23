@@ -179,7 +179,7 @@ async function openSession(date, className)
 
     const session = await res.json()
 
-    document.getElementById("sessionName").textContent = abbrevWeekday(session.classWeekday) + " " + className 
+    document.getElementById("sessionName").textContent = className 
     document.querySelector(".editSession h2").innerText = formatDate(date)
     
     session.members = sortMembers(session.members)

@@ -1,19 +1,22 @@
-// v2 \\
+// v3 \\
 
 
-
-const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 
 const cacheName = "KarateAnwesenheit"
+
+const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 const cachedURLs = [
-    "/",
-    "./index.html",
-    "./style.css",
-    "./manifest.json",
-    "./assets/favicon.png",
-    "./assets/spinner.png",
-    API_URI + "/classes"
+    "/frontend/",
+    "/frontend/index.html",
+    "/frontend/style.css",
+    "/frontend/manifest.json",
+    "/frontend/assets/favicon.png",
+    "/frontend/assets/spinner.png",
+    API_URI + "/classes",
+    "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 ]
+
+
 
 self.addEventListener("install", e => {
     caches.delete(cacheName)

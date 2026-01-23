@@ -1,17 +1,18 @@
-// v6 \\
+// v7 \\
 
 
 
 const cacheName = "KarateAnwesenheit"
 
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+WEB_APP_URI = "https://sammyskaratedojo.github.io/AnwesenheitWebApp/"
 const cachedURLs = [
-    "/frontend/",
-    "/frontend/index.html",
-    "/frontend/style.css",
-    "/frontend/manifest.json",
-    "/frontend/assets/favicon.png",
-    "/frontend/assets/spinner.png",
+    WEB_APP_URI + "/",
+    WEB_APP_URI + "/index.html",
+    WEB_APP_URI + "/style.css",
+    WEB_APP_URI + "/manifest.json",
+    WEB_APP_URI + "/assets/favicon.png",
+    WEB_APP_URI + "/assets/spinner.png",
     API_URI + "/classes",
     "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 ]
@@ -27,11 +28,9 @@ self.addEventListener("activate", e => {
     e.waitUntil(caches.open(cacheName).then(cache => {
         cachedURLs.forEach(i => {
             cache.add(i)
-            .catch(e => { console.error("ERROR URL:", i, "\n", e) })
+            .catch(e => { console.error("Could not cash URL: '"+ i + "'\n", e) })
         })
-    })
-    .catch(e => { console.error("error2", e) })
-)
+    }))
 })
 
 

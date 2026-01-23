@@ -27,7 +27,7 @@ self.addEventListener("activate", e => {
     e.waitUntil(caches.open(cacheName).then(cache => {
         cachedURLs.forEach(i => {
             try { cache.add(i) }
-            catch(e) { console.log(e) }
+            catch(e) { console.error("error", e) }
         })
     }))
 })

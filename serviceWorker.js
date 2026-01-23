@@ -1,4 +1,4 @@
-// v5 \\
+// v6 \\
 
 
 
@@ -29,7 +29,9 @@ self.addEventListener("activate", e => {
             cache.add(i)
             .catch(e => { console.error("error", e) })
         })
-    }))
+    })
+    .catch(e => { console.error("error2", e) })
+)
 })
 
 

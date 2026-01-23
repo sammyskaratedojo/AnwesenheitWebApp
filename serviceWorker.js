@@ -5,7 +5,7 @@
 const cacheName = "KarateAnwesenheit"
 
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
-WEB_APP_URI = "https://sammyskaratedojo.github.io/AnwesenheitWebApp/"
+const WEB_APP_URI = "https://sammyskaratedojo.github.io/AnwesenheitWebApp/"
 const cachedURLs = [
     WEB_APP_URI + "/",
     WEB_APP_URI + "/index.html",

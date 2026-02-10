@@ -1,5 +1,4 @@
-// const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
-const API_URI = "http://ddesktop:3000"
+const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 const STATUSES = ["Anwesend", "Trainer", "Assistent", "Entschuldigt", "Unbekannt"]
 
 let classes = []
@@ -564,3 +563,4 @@ main()
 
 // popup wenn mehr als 1 trainer oder assistent
 // highlight text color
+

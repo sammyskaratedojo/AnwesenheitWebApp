@@ -10,16 +10,16 @@
 :root
 {
     --color-bg: #111212;
-    --color-bg-l: #1c1e1f;
-    --color-bg-d: #1c1e1f;
-    --color-accent : #4CC0FF;
-    --color-accent-dark: #101D25;
+    --color-bg-l: #1d1f22;
+    --color-accent: #4CC0FF;
+    --color-accent-dark: #0f222e;
     --color-fg: rgb(245, 245, 245);
 }
 
 
 ::selection {
     background-color: var(--color-accent);
+    color: white;
 }
 
 
@@ -29,16 +29,17 @@ body {
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-size: medium;
+    padding-inline: 20px;
 }
 
 #mainScr h1 {
-    margin-top: 90px;
+    margin-top: 80px;
     color: var(--color-accent);
     margin-bottom: 32px;
 }
 
 #mainScr h2 {
-    margin-bottom: 64px;
+    margin-bottom: 32px;
 }
 
 h1
@@ -56,33 +57,81 @@ h2
     font-size: 24px;
 }
 
+h3
+{
+    font-size: medium;
+    margin-top: 80px;
+    margin-bottom: 24px;
+}
+
+section {
+    width: 100%;
+    margin-inline: 32px;
+
+}
+
+.caroussell
+{
+    border-radius: 8px;
+    display: flex;
+    gap: 8px;
+    overflow: scroll;
+    box-shadow: inset 10px 10px 10px 10px var(--color-bg);
+    margin-inline: auto;
+    width: max-content;
+    max-width: 100%;
+    padding-bottom: 4jjhpx;
+}
+
+
+.caroussell button 
+{
+    padding: 12px;
+    border-radius: 10px;
+    flex-direction: column;
+    text-align: center;
+    height: max-content;
+    gap: 6px;
+}
+
+p.class-subtitle {
+    color: #999;
+    font-size: small;
+}
+
+
 .maindiv {
     display: flex;
-    width: 100%;
-    padding-top: 50px;
-    padding-bottom: 50px;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    
+    margin-inline: auto;
+    gap: 8px;
 }
 
 .maindiv_item {
-    width: 200px;
     height: 40px;
-    border: none;
     outline: none;
-    margin: 5px;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: var(--color-bg-l);
     color: inherit;
-    border: 9px solid var(--color-bg-l);
+    border: 10px solid var(--color-bg-l);
+    outline: 1px solid #ffffff16;
+}
+
+.maindiv_item:last-child {
+    /* border-radius: 0 8px 8px 0; */
+}
+
+
+section.createSession {
+    
 }
 
 
 button {
-    padding: 20px 20px;
+    padding: 20px 16px;
     cursor: pointer;
-    border: none;
     border-radius: 10px;
     width: 80px;
     min-width: max-content;
@@ -95,7 +144,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ffffff09;
+    border: 1px solid #ffffff0b;
 }
 
 button img
@@ -135,8 +184,7 @@ select option {
 }
 
 .dialogue {
-    padding-block: 20px;
-    padding-inline: 32px;
+    padding: 20px;
     display: flex;
     gap: 35px;
     position: fixed;
@@ -151,6 +199,7 @@ select option {
     max-width: 90dvw;
     width: max-content;
     border: 1px solid var(--color-bg-l);
+    text-align: center;
 }
 
 .dialogue div
@@ -165,10 +214,12 @@ select option {
 
 
 .mainbutton {
-    margin-top: 32px;
-    height: calc(13px + 22px);
-    width: calc(76px + 66px);
+    /* height: calc(13px + 22px); */
+    /* width: calc(76px + 66px); */
+    width: 20ch;
     background-color: var(--color-accent-dark);
+    margin-inline: auto;
+    margin-top: 24px;
 }
 
 
@@ -198,9 +249,9 @@ header h1
 main {
     /*                  */
     margin-top: 100px;
-    padding-inline: 20px;
+    /* padding-inline: 20px; */
     border-radius: 10px;
-    max-width: 70ch;
+    max-width: 60ch;
     margin-inline: auto;
     display: flex;
     flex-direction: column;
@@ -213,7 +264,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    padding-inline: 16px;
+    padding-inline: 8px;
 }
 
 .inputDiv
@@ -247,7 +298,7 @@ li {
     display: flex;
     border-radius: 16px; 
     background-color: var(--color-bg);
-    padding-inline: 10px;
+    padding-inline: 8px;
     padding-block: 12px;
 
     border-bottom: 1px solid #1f2528;
@@ -288,6 +339,8 @@ select {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: max-content;
+    margin-inline: auto;
 }
 
 .editSession {
@@ -371,11 +424,12 @@ div.inputNewProfile
 
 .errDiv {
     position: fixed;
+    left: 0;
+    top: 0;
     background-color: #e94b46;
-    padding: 8px;
+    padding: 5px;
     width: 100%;
     text-align: center;
-    /* display: flex; */
     display: none;
     align-items: center;
     gap: 16px;

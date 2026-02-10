@@ -22,16 +22,26 @@
 
 
     <div id="mainScr">
-    
         <h1>Karate Dojo Lenzinghausen</h1>
         <h2>Anwesenheit</h2>
 
-        <div id="maindiv" class="maindiv">
-            <select name="Klasse" id="mainclass" class="maindiv_item"></select>
-            <input type="date", id="maindate" class="maindiv_item">
-        </div>
+        <section class="existingSessions">
+            <h3>Erstellte Sitzungen</h3>
+            <div class="caroussell">
 
-        <button id="mainbutton" class="mainbutton">Öffnen</button>
+
+            </div>
+        </section>
+        
+        <section class="createSession">
+            <h3>Neue Sitzung erstellen</h3>
+            <div class="maindiv">
+                <input type="date", id="maindate" class="maindiv_item">
+                <select name="Klasse" id="mainclass" class="maindiv_item"></select>
+            </div>
+            
+            <button id="mainbutton" class="mainbutton">Erstellen</button>
+        </section>
     </div>
 
 
@@ -43,7 +53,7 @@
         </header>
         
         <main>
-            <h1 id="sessionName">Session name</h1>
+            <h1>Session name</h1>
             <h2></h2>
             <div class="sessonData">    
                 <div class="sessionDesc inputDiv">

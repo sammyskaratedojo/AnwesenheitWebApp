@@ -1,8 +1,5 @@
-const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
-// const API_URI = "http://localhost:3000"
-// const API_URI = "http://ddesktop:3000"
-
-
+// const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+const API_URI = "http://ddesktop:3000"
 const STATUSES = ["Anwesend", "Trainer", "Assistent", "Entschuldigt", "Unbekannt"]
 
 let classes = []
@@ -26,6 +23,7 @@ async function main()
     }
     catch(e) {
         document.querySelector(".errDiv").style.display = "flex"
+        console.warn(e)
     }
     
     window.addEventListener("beforeunload", e =>
@@ -58,6 +56,8 @@ async function main()
 
 async function fetchApiData()
 {
+    // classes \\
+
     let classesReq = await fetch(API_URI + "/classes")
     classes = await classesReq.json()
 
@@ -71,10 +71,8 @@ async function fetchApiData()
         return a.name.localeCompare(b.name)
     })
 
-    // Search for Mainclass-Object
     const selectClass = document.getElementById("mainclass");
 
-    // Append each Item from "Classes" to mainclass-object
     classes.forEach(cls => {
         const option = document.createElement("option");
         option.value = cls.name
@@ -82,6 +80,10 @@ async function fetchApiData()
         selectClass.appendChild(option);
     })
 
+
+
+    // profiles \\
+    
     const profilesReq = await fetch(API_URI + "/profiles")
     
     const allProfiles = await profilesReq.json()
@@ -89,6 +91,35 @@ async function fetchApiData()
     {
         allProfileNames.push(p.name)
     })
+
+
+
+
+    // mobile sessions \\
+    
+    let mobileSessions = await fetch(API_URI + "/zw-sessions")
+    
+    mobileSessions = await mobileSessions.json()
+
+    mobileSessions.forEach(s => {
+        const button = document.createElement("button")
+
+        const dateP = document.createElement("p")
+        dateP.innerText = s.date
+        button.appendChild(dateP)
+
+        const classP = document.createElement("p")
+        classP.innerText = s.class_name
+        classP.classList.add("class-subtitle")
+        button.appendChild(classP)
+
+        button.addEventListener("click", () => {
+            openSession(parseDate(s.date.toString()), s.class_name)
+        })
+
+        document.querySelector(".caroussell").appendChild(button)
+    })
+
 }
 
 
@@ -164,10 +195,12 @@ async function checkSession(date, className)
 }
 
 
-async function openSession(date, className)
+async function openSession(date, className) // date: Date() not string
 {
+    console.log("opening...", date, className)
+
     let res = await fetch(API_URI + "/get-session?"
-        + `sessionClass=${encodeURIComponent(className)}&`
+        + `sessionClass=${encodeURIComponent(className)}&` // id instead of name
         + `sessionDate=${encodeURIComponent(formatDate(date))}`)
     
     if(!res.ok)
@@ -179,7 +212,7 @@ async function openSession(date, className)
 
     const session = await res.json()
 
-    document.getElementById("sessionName").textContent = className 
+    document.querySelector(".editSession h1").textContent = className 
     document.querySelector(".editSession h2").innerText = formatDate(date)
     
     session.members = sortMembers(session.members)
@@ -220,6 +253,17 @@ function formatDate(date)
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}.${month}.${year}`;
+}
+
+function parseDate(string)
+{
+    const parts = string.split('.')
+    
+    const day = parseInt(parts[0], 10)
+    const month = parseInt(parts[1], 10) - 1 // month index
+    const year = parseInt(parts[2], 10)
+
+    return new Date(year, month, day)
 }
 
 
@@ -318,22 +362,33 @@ async function saveSessionUpdates()
         (new Dialogue("Bitte gib einen Ersteller an.", ["Ok"])).showDialogue()
         return
     }
-    
-    const spinnerImg = document.createElement("img")
-    spinnerImg.src = "./assets/spinner.png"
-    spinnerImg.classList.add("spin")
-    document.querySelector("button.saveSessionEdits").innerHTML = ""
-    document.querySelector("button.saveSessionEdits").appendChild(spinnerImg)
 
 
     const newMembers = []
+    
+    trainerCount = 0
+    assistentCount = 0
 
     document.querySelectorAll(".profiles_list li").forEach(li => {
         const name = li.querySelector("p").innerText
         const status = li.querySelector("select").selectedOptions[0].value
         newMembers.push({name: name, status: status})
+        if(status === "Trainer") trainerCount++
+        if(status === "Assistent") assistentCount++
     })
 
+
+    if(trainerCount > 1 || assistentCount > 1) {
+        const multipleTrainersDialogRes = new Dialogue("Es ist mehr als ein Trainer oder Assistent angegeben. \nTrotzdem speichern?", ["Nein, bearbeiten", "Ja"])
+        if(await multipleTrainersDialogRes.showDialogue() == "Nein, bearbeiten") return
+    }
+
+
+    const spinnerImg = document.createElement("img")
+    spinnerImg.src = "./assets/spinner.png"
+    spinnerImg.classList.add("spin")
+    document.querySelector("button.saveSessionEdits").innerHTML = ""
+    document.querySelector("button.saveSessionEdits").appendChild(spinnerImg)
 
 
     await fetch(API_URI + "/edit-session", {
@@ -507,4 +562,5 @@ main()
 
 //   TODO   \\
 
-// haken nach speichern
+// popup wenn mehr als 1 trainer oder assistent
+// highlight text color

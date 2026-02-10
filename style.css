@@ -75,12 +75,12 @@ section {
     border-radius: 8px;
     display: flex;
     gap: 8px;
-    overflow: scroll;
+    overflow-x: scroll;
     box-shadow: inset 10px 10px 10px 10px var(--color-bg);
     margin-inline: auto;
     width: max-content;
     max-width: 100%;
-    padding-bottom: 4jjhpx;
+    padding-bottom: 8px;
 }
 
 
@@ -117,15 +117,6 @@ p.class-subtitle {
     color: inherit;
     border: 10px solid var(--color-bg-l);
     outline: 1px solid #ffffff16;
-}
-
-.maindiv_item:last-child {
-    /* border-radius: 0 8px 8px 0; */
-}
-
-
-section.createSession {
-    
 }
 
 
@@ -454,10 +445,3 @@ label
 {
     font-size: inherit;
 }
-
-
-
-
-
-
-

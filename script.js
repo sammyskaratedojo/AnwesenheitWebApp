@@ -100,6 +100,13 @@ async function fetchApiData()
     
     mobileSessions = await mobileSessions.json()
 
+    if (mobileSessions.length == 0) {
+        const p = document.createElement("p")
+        p.innerText = "Keine Sitzungen gefunden..."
+        p.style.fontStyle = "italic"
+        document.querySelector("caroussell").appendChild(p)
+    }
+
     mobileSessions.forEach(s => {
         const button = document.createElement("button")
 
@@ -113,12 +120,20 @@ async function fetchApiData()
         button.appendChild(classP)
 
         button.addEventListener("click", () => {
+            const width = button.getBoundingClientRect().width
+            const height = button.getBoundingClientRect().height
+            button.innerHTML = ""
+            const spinner = document.createElement("img")
+            spinner.src = "./assets/spinner.png"
+            spinner.classList.add("spin")
+            button.appendChild(spinner)
+            button.style.width = width + "px"
+            button.style.height = height + "px"
             openSession(parseDate(s.date.toString()), s.class_name)
         })
-
+        document.querySelector(".caroussell").innerHTML = ""
         document.querySelector(".caroussell").appendChild(button)
     })
-
 }
 
 
@@ -561,6 +576,4 @@ main()
 
 //   TODO   \\
 
-// popup wenn mehr als 1 trainer oder assistent
-// highlight text color
 

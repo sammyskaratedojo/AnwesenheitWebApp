@@ -98,6 +98,7 @@ async function fetchApiData()
     let mobileSessions = await fetch(API_URI + "/zw-sessions")
     
     mobileSessions = await mobileSessions.json()
+    console.log(mobileSessions)
     if (mobileSessions.length == 0) {
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen gefunden..."
@@ -108,8 +109,8 @@ async function fetchApiData()
     
     document.querySelector(".caroussell").innerHTML = ""    
     mobileSessions.forEach(s => {
+        
         const button = document.createElement("button")
-
         const dateP = document.createElement("p")
         dateP.innerText = s.date
         button.appendChild(dateP)
@@ -567,5 +568,6 @@ class Dialogue
 
 
 main()
+
 
 

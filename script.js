@@ -22,6 +22,7 @@ async function main()
     }
     catch(e) {
         document.querySelector(".errDiv").style.display = "flex"
+        console.log("Error during Catch")
         console.warn(e)
     }
     
@@ -568,3 +569,4 @@ class Dialogue
 
 
 main()
+

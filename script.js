@@ -98,7 +98,6 @@ async function fetchApiData()
     let mobileSessions = await fetch(API_URI + "/zw-sessions")
     
     mobileSessions = await mobileSessions.json()
-    console.log(mobileSessions)
     if (mobileSessions.length == 0) {
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen gefunden..."
@@ -568,6 +567,7 @@ class Dialogue
 
 
 main()
+
 
 
 

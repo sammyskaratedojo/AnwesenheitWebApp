@@ -102,7 +102,7 @@ async function fetchApiData()
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen gefunden..."
         p.style.fontStyle = "italic"
-        document.querySelector(".caroussell").appendChild(p)
+        document.querySelector(".caroussell").innerHTML.appendChild(p)
     }
 
     
@@ -567,6 +567,7 @@ class Dialogue
 
 
 main()
+
 
 
 

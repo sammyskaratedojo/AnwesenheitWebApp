@@ -56,6 +56,50 @@ async function main()
 
 async function fetchApiData()
 {
+    // mobile sessions \\
+    
+    let mobileSessions = await fetch(API_URI + "/zw-sessions")
+    
+    mobileSessions = await mobileSessions.json()
+    if (mobileSessions.length == 0) {
+        const p = document.createElement("p")
+        p.innerText = "Keine Sitzungen"
+        p.style.fontStyle = "italic"
+        document.querySelector("caroussell").appendChild(p)
+    }
+
+    
+    document.querySelector(".caroussell").innerHTML = ""    
+    mobileSessions.forEach(s => {
+        const button = document.createElement("button")
+
+        const dateP = document.createElement("p")
+        dateP.innerText = s.date
+        button.appendChild(dateP)
+
+        const classP = document.createElement("p")
+        classP.innerText = s.class_name
+        classP.classList.add("class-subtitle")
+        button.appendChild(classP)
+
+        button.addEventListener("click", () => {
+            const width = button.getBoundingClientRect().width
+            const height = button.getBoundingClientRect().height
+            button.innerHTML = ""
+            const spinner = document.createElement("img")
+            spinner.src = "./assets/spinner.png"
+            spinner.classList.add("spin")
+            button.appendChild(spinner)
+            button.style.width = width + "px"
+            button.style.height = height + "px"
+            openSession(parseDate(s.date.toString()), s.class_name)
+        })
+        document.querySelector(".caroussell").appendChild(button)
+    })
+
+
+
+
     // classes \\
 
     let classesReq = await fetch(API_URI + "/classes")
@@ -90,50 +134,6 @@ async function fetchApiData()
     allProfiles.forEach(p =>
     {
         allProfileNames.push(p.name)
-    })
-
-
-
-
-    // mobile sessions \\
-    
-    let mobileSessions = await fetch(API_URI + "/zw-sessions")
-    
-    mobileSessions = await mobileSessions.json()
-    if (mobileSessions.length == 0) {
-        const p = document.createElement("p")
-        p.innerText = "Keine Sitzungen gefunden..."
-        p.style.fontStyle = "italic"
-        document.querySelector("caroussell").appendChild(p)
-    }
-
-    
-    document.querySelector(".caroussell").innerHTML = ""    
-    mobileSessions.forEach(s => {
-        const button = document.createElement("button")
-
-        const dateP = document.createElement("p")
-        dateP.innerText = s.date
-        button.appendChild(dateP)
-
-        const classP = document.createElement("p")
-        classP.innerText = s.class_name
-        classP.classList.add("class-subtitle")
-        button.appendChild(classP)
-
-        button.addEventListener("click", () => {
-            const width = button.getBoundingClientRect().width
-            const height = button.getBoundingClientRect().height
-            button.innerHTML = ""
-            const spinner = document.createElement("img")
-            spinner.src = "./assets/spinner.png"
-            spinner.classList.add("spin")
-            button.appendChild(spinner)
-            button.style.width = width + "px"
-            button.style.height = height + "px"
-            openSession(parseDate(s.date.toString()), s.class_name)
-        })
-        document.querySelector(".caroussell").appendChild(button)
     })
 }
 

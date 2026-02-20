@@ -7,10 +7,6 @@ const cacheName = "KarateAnwesenheit"
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 const WEB_APP_URI = "https://sammyskaratedojo.github.io/AnwesenheitWebApp"
 const cachedURLs = [
-    WEB_APP_URI + "/",
-    WEB_APP_URI + "/index.html",
-    WEB_APP_URI + "/style.css",
-    WEB_APP_URI + "/manifest.json",
     WEB_APP_URI + "/assets/favicon.png",
     WEB_APP_URI + "/assets/add.svg",
     WEB_APP_URI + "/assets/back.svg",
@@ -19,7 +15,8 @@ const cachedURLs = [
     WEB_APP_URI + "/assets/save.svg",
     WEB_APP_URI + "/assets/tick.svg",
     WEB_APP_URI + "/assets/refresh.svg",
-    API_URI + "/classes",
+    WEB_APP_URI + "/assets/creator.svg",
+    WEB_APP_URI + "/assets/description.svg",
     "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 ]
 

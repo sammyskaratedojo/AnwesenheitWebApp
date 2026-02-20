@@ -1,4 +1,5 @@
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
+
 const STATUSES = ["Anwesend", "Trainer", "Assistent", "Entschuldigt", "Unbekannt"]
 
 let classes = []
@@ -15,7 +16,8 @@ async function main()
     {
         navigator.serviceWorker.register("./serviceWorker.js")
     }
-    
+
+
     try {
         await fetchApiData()
     }
@@ -96,20 +98,20 @@ async function fetchApiData()
     // mobile sessions \\
     
     let mobileSessions = await fetch(API_URI + "/zw-sessions")
-
-    document.querySelector(".caroussell").innerHTML = ""
     
     mobileSessions = await mobileSessions.json()
     if (mobileSessions.length == 0) {
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen gefunden..."
         p.style.fontStyle = "italic"
-        document.querySelector(".caroussell").appendChild(p)
+        document.querySelector("caroussell").appendChild(p)
     }
+
     
+    document.querySelector(".caroussell").innerHTML = ""    
     mobileSessions.forEach(s => {
-        
         const button = document.createElement("button")
+
         const dateP = document.createElement("p")
         dateP.innerText = s.date
         button.appendChild(dateP)
@@ -210,8 +212,6 @@ async function checkSession(date, className)
 
 async function openSession(date, className) // date: Date() not string
 {
-    console.log("opening...", date, className)
-
     let res = await fetch(API_URI + "/get-session?"
         + `sessionClass=${encodeURIComponent(className)}&` // id instead of name
         + `sessionDate=${encodeURIComponent(formatDate(date))}`)
@@ -242,6 +242,9 @@ async function openSession(date, className) // date: Date() not string
     
     openedSession.className = className
     openedSession.sessionDate = formatDate(date)
+
+    if(localStorage.getItem("creatorName") != null)
+    document.querySelector(".inputSessionCreator").value = localStorage.getItem("creatorName")
 }
 
 
@@ -418,6 +421,8 @@ async function saveSessionUpdates()
         })
     })
 
+    localStorage.setItem("creatorName", document.querySelector(".inputSessionCreator").value)
+
     document.querySelector("button.saveSessionEdits").removeChild(spinnerImg)
     const saveImg = document.createElement("img")
     saveImg.src = "./assets/tick.svg"
@@ -566,12 +571,13 @@ class Dialogue
 }
 
 
+
 main()
 
 
 
 
 
-
+//   TODO   \\
 
 

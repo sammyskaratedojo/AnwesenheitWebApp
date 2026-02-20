@@ -254,29 +254,39 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 16px;
     padding-inline: 8px;
 }
 
 .inputDiv
 {
     display: flex;
-    gap: 32px;
+    gap: 12px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    background-color: var(--color-bg-l);
+    padding: 8px;
+    padding-inline: 12px;
+    border-radius: 12px;
+    border: 1px solid #ffffff0b;
+}
+
+
+.inputDiv img {
+    height: 22px;
+    fill: var(--color-accent);
 }
 
 .textInput
 {
-    background-color: transparent;
+    background: transparent;
     border: none;
-    border-bottom: 2px solid var(--color-accent);
     color: inherit;
     cursor: initial;
     outline: none;
-    padding: 2px;
     width: 100%;
+    border-radius: 0;
 }
 
 

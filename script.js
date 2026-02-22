@@ -59,6 +59,8 @@ async function fetchApiData()
     // mobile sessions \\
     
     let mobileSessions = await fetch(API_URI + "/zw-sessions")
+
+    document.querySelector(".caroussell").innerHTML = ""
     
     mobileSessions = await mobileSessions.json()
     if (mobileSessions.length == 0) {
@@ -67,9 +69,7 @@ async function fetchApiData()
         p.style.fontStyle = "italic"
         document.querySelector("caroussell").appendChild(p)
     }
-
     
-    document.querySelector(".caroussell").innerHTML = ""    
     mobileSessions.forEach(s => {
         const button = document.createElement("button")
 
@@ -579,5 +579,6 @@ main()
 
 
 //   TODO   \\
+
 
 

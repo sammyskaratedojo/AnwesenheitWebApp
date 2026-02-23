@@ -58,17 +58,18 @@ async function fetchApiData()
 {
     // mobile sessions \\
     
-    let mobileSessions = await fetch(API_URI + "/zw-sessions")
-
     document.querySelector(".caroussell").innerHTML = ""
+    
+    let mobileSessions = await fetch(API_URI + "/zw-sessions")
     
     mobileSessions = await mobileSessions.json()
     if (mobileSessions.length == 0) {
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen"
         p.style.fontStyle = "italic"
-        document.querySelector("caroussell").appendChild(p)
+        document.querySelector(".caroussell").appendChild(p)
     }
+
     
     mobileSessions.forEach(s => {
         const button = document.createElement("button")
@@ -573,12 +574,4 @@ class Dialogue
 
 
 main()
-
-
-
-
-
-//   TODO   \\
-
-
 

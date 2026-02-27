@@ -61,8 +61,8 @@ async function fetchApiData()
     document.querySelector(".caroussell").innerHTML = ""
     
     let mobileSessions = await fetch(API_URI + "/zw-sessions")
-    
     mobileSessions = await mobileSessions.json()
+    
     if (mobileSessions.length == 0) {
         const p = document.createElement("p")
         p.innerText = "Keine Sitzungen"
@@ -236,6 +236,8 @@ async function openSession(date, className) // date: Date() not string
         addProfileRow(profile.name, profile.status)
     })
 
+    countActiveMembers()
+
     document.querySelector("#mainScr").style.display = "none"
     document.querySelector(".editSession").style.display = "initial"
 
@@ -311,9 +313,21 @@ function addProfileRow(name, status)
 
     selectStatus.addEventListener("change", e => {
         selectStatus.style.color = getStatusColor(e.target.selectedOptions[0].value)
+        countActiveMembers()
     })
 
     profilesList.scrollTo(0, profilesList.scrollHeight)
+}
+
+
+function countActiveMembers() {
+    let count = 0
+    for (let i of document.querySelector(".profiles_list").children) {
+        if(["Anwesend", "Trainer", "Assistent"].includes(i.querySelector("select").value)) count++
+    }
+
+    document.querySelector(".totalMembersCount p").innerText = count
+    return count
 }
 
 
@@ -574,4 +588,11 @@ class Dialogue
 
 
 main()
+
+
+
+
+
+//   TODO   \\
+
 

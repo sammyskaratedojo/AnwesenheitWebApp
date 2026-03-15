@@ -410,10 +410,10 @@ async function saveSessionUpdates()
 
 
     if(trainerCount > 1 || assistentCount > 1) {
-        const multipleTrainersDialogRes = new Dialogue("Es ist mehr als ein Trainer oder Assistent angegeben. \nTrotzdem speichern?", ["Nein, bearbeiten", "Ja"])
-        if(await multipleTrainersDialogRes.showDialogue() == "Nein, bearbeiten") return
+        const errDial = new Dialogue("Fehler: Es ist mehr als ein Trainer oder Assistent angegeben. Möchtest du das trotzdem so eingeben, dann schreib eine kurze Nachricht in die Gruppe, auf das wir das dann von Hand richtig stellen.", ["Ok"])
+        await errDial.showDialogue()
+        return;
     }
-
 
     const spinnerImg = document.createElement("img")
     spinnerImg.src = "./assets/spinner.png"

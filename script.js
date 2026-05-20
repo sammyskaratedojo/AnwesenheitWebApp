@@ -1,6 +1,6 @@
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 
-const STATUSES = ["Anwesend", "Trainer", "Assistent", "Entschuldigt", "Unbekannt"]
+const STATUSES = ["Anwesend", "Trainer", "Assistent", "Zuschauer", "Entschuldigt", "Unbekannt"]
 
 let classes = []
 let allProfileNames = []
@@ -323,7 +323,7 @@ function addProfileRow(name, status)
 function countActiveMembers() {
     let count = 0
     for (let i of document.querySelector(".profiles_list").children) {
-        if(["Anwesend", "Trainer", "Assistent"].includes(i.querySelector("select").value)) count++
+        if(["Anwesend", "Trainer", "Assistent", "Zuschauer"].includes(i.querySelector("select").value)) count++
     }
 
     document.querySelector(".totalMembersCount p").innerText = count
@@ -501,10 +501,13 @@ function getStatusColor(status)
         case STATUSES[0]: // Anwesend
             hue = "136deg"
             break;
-        case STATUSES[3]: // Entschuldigt
+        case STATUSES[3]: // Zuschauer
+            hue = "70deg"
+            break;
+        case STATUSES[4]: // Entschuldigt
             hue = "15deg"
             break;
-        case STATUSES[4]: // Unbekannt
+        case STATUSES[5]: // Unbekannt
             return "#bbb"
         
     }

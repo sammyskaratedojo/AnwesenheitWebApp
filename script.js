@@ -37,7 +37,7 @@ async function main()
 
     document.querySelector(".mainbutton").addEventListener("click", pressMainbutton)
 
-    document.querySelector("button.back").addEventListener("click", resetWindow)
+    document.querySelector("button.back").addEventListener("click", pressWindowBtn)
 
     document.querySelector("button.saveSessionEdits").addEventListener("click", saveSessionUpdates)
 
@@ -51,6 +51,10 @@ async function main()
     })
 
     document.querySelector(".errDiv button").addEventListener("click", () => window.location.reload())
+}
+
+function pressWindowBtn() {
+    resetWindow(false)
 }
 
 
@@ -354,6 +358,7 @@ async function addProfileToSession()
     {
         const dialogue = new Dialogue(`Fehler beim Suchen des Profils`, ["Ok"])
         await dialogue.showDialogue()
+        return
     }
     
     if(res.status === 404)
@@ -368,6 +373,23 @@ async function addProfileToSession()
 
     
     addProfileRow(profileName, "Unbekannt")
+
+
+    // save as default
+    const saveAsDefaultD = new Dialogue("Profil wird der Sitzung hinzugefügt.", ["Standardmäßig in diese Einheit übernehmen", "Nur für diese Sitzung"])
+    if (await saveAsDefaultD.showDialogue() == "Standardmäßig in diese Einheit übernehmen") {
+        //schick server
+        await fetch(API_URI + "/update-default-sessionlist", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                className: openedSession.className,
+                profileName: profileName
+            })
+        })
+    }
 }
 
 
@@ -410,7 +432,7 @@ async function saveSessionUpdates()
 
 
     if(trainerCount > 1 || assistentCount > 1) {
-        const errDial = new Dialogue("Fehler: Es ist mehr als ein Trainer oder Assistent angegeben. Möchtest du das trotzdem so eingeben, dann schreib eine kurze Nachricht in die Gruppe, auf das wir das dann von Hand richtig stellen.", ["Ok"])
+        const errDial = new Dialogue("Fehler: Es ist mehr als ein Trainer oder Assistent angegeben.", ["Ok"])
         await errDial.showDialogue()
         return;
     }
@@ -437,6 +459,12 @@ async function saveSessionUpdates()
     })
 
     localStorage.setItem("creatorName", document.querySelector(".inputSessionCreator").value)
+
+    const mainMenu = await (new Dialogue("Sitzung erfolgreich gespeichert.", ["Hauptmenü", "Weiter bearbeiten"])).showDialogue()
+    if(mainMenu == "Hauptmenü") {
+        resetWindow(true)
+        console.log("main menu")
+    }
 
     document.querySelector("button.saveSessionEdits").removeChild(spinnerImg)
     const saveImg = document.createElement("img")
@@ -471,11 +499,14 @@ function genProfileSuggestion(e)
 }
 
 
-async function resetWindow()
+async function resetWindow(skipDialogue)
 {
-    const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Bestätigen", "Auf Seite bleiben"])
-    const res = await resetDial.showDialogue()
-    if(res == "Auf Seite bleiben") return
+    if(!skipDialogue || skipDialogue == undefined) {
+        const resetDial = new Dialogue("Änderungen könnten nicht gespeichert sein.", ["Bestätigen", "Auf Seite bleiben"])
+        const res = await resetDial.showDialogue()
+        if(res == "Auf Seite bleiben") return
+    }
+
     openedSession = {}
     document.querySelector("input.inputNewProfile").value = ""
     document.querySelector(".inputSessionInfo").value = ""
@@ -597,5 +628,4 @@ main()
 
 
 //   TODO   \\
-
 

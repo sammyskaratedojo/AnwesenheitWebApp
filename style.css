@@ -161,7 +161,6 @@ select option {
     border-radius: 100px;
 }
 
-
 .dialogueBackground {
     display: flex;
     width: 100%;
@@ -188,22 +187,36 @@ select option {
     flex-direction: column;
     border-radius: 12px;
     align-items: center;
-    max-width: 90dvw;
-    width: max-content;
+
+    width: 90dvw;
+    max-width: 900px;
+
+    box-sizing: border-box;
+
     border: 1px solid var(--color-bg-l);
     text-align: center;
 }
 
-.dialogue div
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 40px;
+.dialogue p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
+.dialogue div {
+    display: flex;
+    flex-direction: column; /* Buttons untereinander */
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    gap: 12px;
+}
 
+.dialogue button {
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: normal; /* Text darf umbrechen */
+    overflow-wrap: anywhere;
+}
 
 .mainbutton {
     /* height: calc(13px + 22px); */

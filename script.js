@@ -1,6 +1,6 @@
 const API_URI = "https://anwesenheits-api.vercel.app/api/v1"
 
-const STATUSES = ["Anwesend", "Trainer", "Assistent", "Zuschauer", "Entschuldigt", "Unbekannt"]
+const STATUSES = ["Anwesend", "Trainer", "Assistent", "Zuschauer", "Entschuldigt", "Probe", "Unbekannt"]
 
 let classes = []
 let allProfileNames = []
@@ -538,7 +538,10 @@ function getStatusColor(status)
         case STATUSES[4]: // Entschuldigt
             hue = "15deg"
             break;
-        case STATUSES[5]: // Unbekannt
+        case STATUSES[5]: // Probe
+            hue = "297deg"
+            break;
+        case STATUSES[6]: // Unbekannt
             return "#bbb"
         
     }

@@ -339,6 +339,10 @@ async function addProfileToSession()
 {
     const profileName = document.querySelector(".addProfile input").value
     document.querySelector(".addProfile input").value = ""
+
+    if (profileName == '') {
+        (new Dialogue("Ungültiger Profilname", ["Ok"])).showDialogue()
+    }
     
 
     document.querySelectorAll(".profiles_list li")
@@ -360,6 +364,8 @@ async function addProfileToSession()
         await dialogue.showDialogue()
         return
     }
+
+    const newProfile = false;
     
     if(res.status === 404)
     {
@@ -368,11 +374,17 @@ async function addProfileToSession()
 
         if(res == "Nein") return
 
+        const newProfile = true;
         await createZwProfile(profileName)
     }
 
     
     addProfileRow(profileName, "Unbekannt")
+
+    if (newProfile == true) {
+        (new Dialogue("Neues Profil wurde in diese Einheit hinzugefügt.", ["Ok"])).showDialogue()
+        return
+    }
 
 
     // save as default
@@ -631,4 +643,3 @@ main()
 
 
 //   TODO   \\
-

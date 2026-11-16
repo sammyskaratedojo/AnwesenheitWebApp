@@ -342,6 +342,7 @@ async function addProfileToSession()
 
     if (profileName == '') {
         (new Dialogue("Ungültiger Profilname", ["Ok"])).showDialogue()
+        return
     }
     
 

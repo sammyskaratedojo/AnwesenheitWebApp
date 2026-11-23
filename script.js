@@ -457,19 +457,43 @@ async function saveSessionUpdates()
     document.querySelector("button.saveSessionEdits").appendChild(spinnerImg)
 
 
-    await fetch(API_URI + "/edit-session", {
+    const payload = {
+        sessionClass: openedSession.className,
+        sessionDate: openedSession.sessionDate,
+        sessionInfo: document.querySelector(".inputSessionInfo").value,
+        members: newMembers,
+        creator: creator,
+    };
+    
+    const json = JSON.stringify(payload);
+    
+    console.log("JSON Größe:", (new Blob([json]).size / 1024).toFixed(2), "KB");
+    
+    const response = await fetch(API_URI + "/edit-session", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ 
-            sessionClass: openedSession.className, 
-            sessionDate: openedSession.sessionDate,
-            sessionInfo: document.querySelector(".inputSessionInfo").value,
-            members: newMembers,
-            creator: creator,
-        })
-    })
+        body: json
+    });
+    
+    console.log("Status:", response.status);
+    console.log("Response:", await response.text());
+
+
+    // await fetch(API_URI + "/edit-session", {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({ 
+    //         sessionClass: openedSession.className, 
+    //         sessionDate: openedSession.sessionDate,
+    //         sessionInfo: document.querySelector(".inputSessionInfo").value,
+    //         members: newMembers,
+    //         creator: creator,
+    //     })
+    // })
 
     localStorage.setItem("creatorName", document.querySelector(".inputSessionCreator").value)
 
